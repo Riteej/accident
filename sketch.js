@@ -1,34 +1,39 @@
-var fr;
-var mr;
+var bullet,wall;
+
+var speed,weight;
 
 
 function setup() {
-  createCanvas(800,400);
- mr=createSprite(400, 200, 50, 50);
-  fr=createSprite(500,200);
+  createCanvas(1000,400);
+  //createSprite(400, 200, 50, 50);
+  speed=random(55,90);
+  weight=random(400,1500);
+  
+  thickness=random(22,83);
+  
+  bullet=createSprite(50,200,50,5);
+  bullet.velocityX=speed;
+  bullet.shapeColor=color(255);
 
-  mr.shapeColor="red";
-  fr.shapeColor="red";
+wall=createSprite(800,200,thickness,height/2);
+
 }
 
 function draw() {
-  background("blue");  
-mr.x=mouseX;
-mr.y=mouseY;
+  
+  background("pink"); 
+  drawSprites(); 
+  if (wall.x-bullet.x < (bullet.width+wall.width)/2){
+  bullet.velocityX=0;
+  var damage=0.5* weight*speed*speed/(thickness*thickness*thickness);
+  if (damage>10 ){
+    wall.shapeColor=color(225,0,0);
 
-isTouching();
-  drawSprites();
+  } 
+  
+  if (damage<10){
+wall.shapeColor=color(0,255,0);
+  }
 }
-function isTouching(){
-  if(( mr.x-fr.x<mr.width/2 +fr.width/2)&& 
-  ( (fr.x-mr.x<fr.width/2 +mr.width/2))&&
-  (fr.y-mr.x<fr.height/2 +mr.height/2) &&
- ( mr.y-fr.y<mr.height/2 +fr.height/2) ){
-  mr.shapeColor="lime";
-  fr.shapeColor="lime";}
-  else {
-
-    mr.shapeColor="red";
-    fr.shapeColor="red";
- }
+ 
 }
